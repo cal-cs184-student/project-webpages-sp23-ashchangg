@@ -1,7 +1,196 @@
-<html>
-	<head>
-	</head>
-	<body>
-		Project 1 here
-	</body>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<style>
+  body {
+    padding: 100px;
+    width: 1000px;
+    margin: auto;
+    text-align: left;
+    font-weight: 300;
+    font-family: 'Open Sans', sans-serif;
+    color: #121212;
+  }
+  h1, h2, h3, h4 {
+    font-family: 'Source Sans Pro', sans-serif;
+  }
+</style>
+<title>CS 184 Rasterizer</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link href="https://fonts.googleapis.com/css?family=Open+Sans|Source+Sans+Pro" rel="stylesheet">
+</head>
+
+
+<body>
+
+<h1 align="middle">CS 184: Computer Graphics and Imaging, Spring 2023</h1>
+<h1 align="middle">Project 1: Rasterizer</h1>
+<h2 align="middle">Ashley Chang</h2>
+
+<br><br>
+
+<div>
+
+<h2 align="middle">Overview</h2>
+<p>In this project, we implemented a simple rasterizer which included features like drawing triangles, supersampling, hierarchical transforms, and texture mapping with antialiasing. 
+  I was able to better understand how different features work and how to improve upon these basic ideas to achieve better results.
+</p>
+
+<h2 align="middle">Section I: Rasterization</h2>
+
+<h3 align="middle">Part 1: Rasterizing single-color triangles</h3>
+
+<p>In this task, we rasterize single-color triangles by performing point-in-triangle tests on each pixel (using the center of the pixel as the sample point). 
+  The point-in-triangle test checks whether a sample point s = (sx, sy) is inside the triangle. This involves checking if L(x, y) >= 0 for all three lines or 
+  L(x, y) < 0 for all three lines. Before traversing through pixels we will check the bounding box of the triangle and only evaluate pixels within this range.
+</p>
+
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/task1.png" align="middle" width="400px"/>
+        <figcaption align="middle"><i>basic/test4.svg with default viewing parameters</i></figcaption>
+      </td>
+    </tr>
+  </table>
+  <br>
+</div>
+
+<p> Above is a screenshot of basic/test4.svg with default viewing parameters. We can see that the pixel inspector is centered on an interesting part of the scene
+  where we can see visible aliasing on the diagonal, but not on the horizontal line. This is apparent in all the non-horizontal/vertical lines in the image.
+</p>
+
+
+<h3 align="middle">Part 2: Antialiasing triangles</h3>
+<p> In this task use supersampling to antialias our triangles, giving us smoother lines/less jaggies as it allows us to render the image at a higher resolution. 
+  We do this by taking sqrt(sample_rate) * sqrt(sample_rate) samples in each pixel.
+  Similar to task 1, we will perform the point-in-triangle test, and use the average color of these subpixels to color the given pixel.
+  While in task 1, we directly draw onto the framebuffer, for supersampling, we draw into sample_buffer first, average the colors of these super samples,
+  then draw the averaged color onto the framebuffer. This implementation also involves resizing the buffer * sample_rate.
+
+</p>
+
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/task2_sample1.png" align="middle" width="300px"/>
+        <figcaption align="middle"><i>sample rate = 1</i></figcaption>
+      </td>
+      <td>
+        <img src="images/task2_sample4.png" align="middle" width="300px"/>
+        <figcaption align="middle"><i>sample rate = 4</i></figcaption>
+      </td>
+      <td>
+        <img src="images/task2_sample16.png" align="middle" width="300px"/>
+        <figcaption align="middle"><i>sample rate = 16</i></figcaption>
+      </td>
+    </tr>
+  </table>
+  <br>
+</div>
+
+<p> Above is a screenshot of basic/test4.svg with default viewing parameters and differing sample rates. While in the screenshot from task 1
+  we see visible aliasing on the diagonal, supersampling in task 2 creates smoother lines. This is because we are evaluating pixels at a higher resolution.
+</p>
+
+
+
+<h3 align="middle">Part 3: Transforms</h3>
+<p> In this task we implement three types of transforms - translations, scales, and rotations. To do this we calculate each corresponding 3x3 Matrix as defined in lecture.
+</p>
+
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/task3.png" align="middle" width="400px"/>
+        <figcaption align="middle"><i>cubeman dancing</i></figcaption>
+      </td>
+    </tr>
+  </table>
+  <br>
+</div>
+
+<p> Above is a screenshot of my updated version of svg/transforms/robot.svg with cubeman dancing. I played around with the different transforms, 
+  scaling up the size of the head, rotating the arms and legs, and using translations to get rid of overlapping shapes that resulted from the transforms. 
+</p>
+
+<h2 align="middle">Section II: Sampling</h2>
+
+<h3 align="middle">Part 4: Barycentric coordinates</h3>
+<p> In this task, we implement RasterizerImp::rasterize_interpolated_color_triangle(...) to draw a triangle with colors defined at the vertices and 
+  interpolated across the triangle area using barycentric interpolation. In order to do this we calculate the alpha, beta, and gamma values using
+  the formula outlined in lecture. We can use this to convert our points and colors as the formula can be used for positions, texture coordinates, color,
+  normal vectors, material attributes, etc.
+</p>
+
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/task4_ex.png" align="middle" width="400px"/>
+        <figcaption align="middle"><i>triangle with one red, one green, one blue vertex</i></figcaption>
+      </td>
+    </tr>
+  </table>
+  <br>
+</div>
+
+<p> Above is a screenshot of the result of using baycentric interpolation to draw a triangle with only 3 points (one red, one green, and one blue vertex).
+  The result is a smoothly blended color triangle.
+</p>
+
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/task4_test7.png" align="middle" width="400px"/>
+        <figcaption align="middle"><i>svg/basic/test7.svg with default viewing parameters</i></figcaption>
+      </td>
+    </tr>
+    <br>
+  </table>
+</div>
+
+
+<h3 align="middle">Part 5: "Pixel sampling" for texture mapping</h3>
+<p> In this task, we implement texture sampling on a full-resolution texture image using two methods as described in lecture - 
+  nearest neighbor and bilinear interpolation. In the nearest neighbor implementation, we convert the uv coordinates to xy, rounding to
+  the nearest pixel. Then we will return the texture at that point. In the bilinear interpolation method, we convert the uv coordinates to xy,
+  and follow the method described in lecture (using two helper lerps, then one final vertical lerp).
+</p>
+
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/task1.png" align="middle" width="400px"/>
+        <figcaption align="middle"><i>nearest neighbor sampling</i></figcaption>
+      </td>
+      <td>
+        <img src="images/task1.png" align="middle" width="400px"/>
+        <figcaption align="middle"><i>bilinear sampling</i></figcaption>
+      </td>
+    </tr>
+  </table>
+  <br>
+</div>
+
+<p> Above is a screenshot of where bilinear sampling clearly defeats nearest sampling.
+</p>
+
+
+<h3 align="middle">Part 6: "Level sampling" with mipmaps for texture mapping</h3>
+<p> In part 6, we update our previous implementation to support sampling different mipmap levels. 
+  To do this, we find (du/dx, dv/dx) and (du/dy, dv/dy) which is then used to find L. From L we can calculate
+  the level D as described in lecture.
+
+</p>
+
+<p>
+</p>
+
+</body>
 </html>
