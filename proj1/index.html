@@ -166,31 +166,73 @@
   <table style="width=100%">
     <tr>
       <td>
-        <img src="images/task1.png" align="middle" width="400px"/>
-        <figcaption align="middle"><i>nearest neighbor sampling</i></figcaption>
+        <img src="images/task5_near1.png" align="middle" width="400px"/>
+        <figcaption align="middle"><i>Nearest sampling, 1 sample per pixel</i></figcaption>
       </td>
       <td>
-        <img src="images/task1.png" align="middle" width="400px"/>
-        <figcaption align="middle"><i>bilinear sampling</i></figcaption>
+        <img src="images/task5_near16.png" align="middle" width="400px"/>
+        <figcaption align="middle"><i>Nearest sampling, 16 sample per pixel</i></figcaption>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <img src="images/task5_bi1.png" align="middle" width="400px"/>
+        <figcaption align="middle"><i>Bilinear sampling, 1 sample per pixel</i></figcaption>
+      </td>
+      <td>
+        <img src="images/task5_bi16.png" align="middle" width="400px"/>
+        <figcaption align="middle"><i>Bilinear sampling, 16 sample per pixel</i></figcaption>
       </td>
     </tr>
   </table>
   <br>
 </div>
 
-<p> Above is a screenshot of where bilinear sampling clearly defeats nearest sampling.
+<p> Above is a screenshot of where bilinear sampling clearly defeats nearest sampling (smoother lines and colors).
+  While the different is more apparent at 1 sample per pixel, the quality of the resulting image from each method differs less as we increase the sample rate.
 </p>
 
 
 <h3 align="middle">Part 6: "Level sampling" with mipmaps for texture mapping</h3>
-<p> In part 6, we update our previous implementation to support sampling different mipmap levels. 
-  To do this, we find (du/dx, dv/dx) and (du/dy, dv/dy) which is then used to find L. From L we can calculate
-  the level D as described in lecture.
-
+<p> In part 6, we update our previous implementation to support sampling different mipmap levels. When lsm == L_ZERO, we will simply sample using the specified pixel sampling method
+  from the zero-th level. When lsm == L_NEAREST, we do the same but this time our level will be equal to level D we computed
+  using the method described in lecture rounded to the nearest level. When lsm == L_LINEAR, we take the two adjacent levels, 
+  then compute a weighted sum of using one sample from each of the levels (using the method described in leture).
 </p>
 
-<p>
-</p>
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/task6_lzero_bi.png" align="middle" width="400px"/>
+        <figcaption align="middle"><i>Level 0, Bilinear Pixel Sampling</i></figcaption>
+      </td>
+      <td>
+        <img src="images/task6_lnear_bi.png" align="middle" width="400px"/>
+        <figcaption align="middle"><i>Nearest Level, Bilinear Pixel Sampling</i></figcaption>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <img src="images/task6_lbi_near.png" align="middle" width="400px"/>
+        <figcaption align="middle"><i>Bilinear Level, Nearest Pixel Sampling</i></figcaption>
+      </td>
+      <td>
+        <img src="images/task6_lzero_near.png" align="middle" width="400px"/>
+        <figcaption align="middle"><i>Level 0, Nearest Pixel Sampling</i></figcaption>
+      </td>
+    </tr>
+  </table>
+  <br>
+</div>
+
+<p> Using mipmaps require more storage in memory to store information from multiple levels, while decreasing time required to render an image and aliasing.
+</p> 
+
+<br><br><br>
+
+<a href="https://cal-cs184-student.github.io/project-webpages-sp23-ashchangg/proj1/index.html">Project 1 Webpage Link</a>
+<p>https://cal-cs184-student.github.io/project-webpages-sp23-ashchangg/proj1/index.html</p>
 
 </body>
 </html>
