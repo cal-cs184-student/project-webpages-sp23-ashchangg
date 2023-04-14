@@ -1,7 +1,688 @@
-<html>
-	<head>
-	</head>
-	<body>
-		Project 4 here
-	</body>
-</html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>[CS 184] Project 4</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="0d193e7f-71ce-4573-9228-b5c95c6bfc5c" class="page sans"><header><h1 class="page-title">[CS 184] Project 4</h1></header><div class="page-body"><h3 id="6e948161-6df2-4b99-9f15-43785922e0f2" class=""><strong>Ashley Chang, Dominic de Bettencourt </strong></h3><h2 id="d57ff832-917f-420e-bbd1-13b3fe62c9a3" class=""><mark class="highlight-yellow_background">Overview</mark></h2><p id="792a1ec3-7c01-4bd8-88f9-b043313ec71c" class="">In this project, we completed several tasks relating to animation, and had the overall result of simulating a cloth falling and interacting with a sphere and plane. We first built a grid of point masses to represent the cloth, then simulated the cloth being acted on by forces using numerical integration. After this, we simulated some collisions - firstly with a sphere and a plane, and then the cloth colliding with itself. Finally, we wrote several shaders to color the cloth in various interesting ways.</p><h2 id="8eb0cf77-4583-4a3e-9c53-44da226523c5" class=""><mark class="highlight-yellow_background"><strong>Part 1</strong></mark></h2><p id="6a24269f-af66-4d7e-aba4-a8ba37e08940" class="">Our approach to Part 1 was fairly simple. We used two for loops, the first one to create the point masses and the second one to create the springs. In the first for loop, we iterated through all of the points using a nested for loop to cover all possibilities between (0, 0) and <code>(num_height_points, num_width_points)</code>. Then, in the second for loop, we iterate through all of the point masses again, and add all of the required springs, as long as the spring would be connected to another point mass on the grid. </p><p id="6a4260e6-2a98-417d-aef5-1f27f3163c0e" class="">
+</p><p id="cab138aa-c9f9-4f56-8032-28d0d9551e3c" class="">We ran into a few issues with this, mainly with our pointers being incorrect or with edge cases, but were eventually able to get it to work through lots of testing with print statements. We had a double to int conversion error that we didn’t find until a later part, as we hadn’t casted <code>rand()</code> to a double and so our random number was always 0 after dividing by <code>RAND_MAX</code>.</p><p id="62fb9355-eabf-4dcc-b9cf-f434ba96c0bf" class="">
+</p><p id="afa4f97b-aed3-4f84-b0f3-8d889a8f21a9" class="">Structure of point masses and springs:</p><div id="854d35b5-9730-4a6e-8a29-7f61c7295a37" class="column-list"><div id="4e4c75f8-77ef-4080-9ca0-84db3f07b208" style="width:50%" class="column"><figure id="30cde78b-108d-4a0f-b5f5-2243b708fe1d" class="image"><a href="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_2.26.57_PM.png"><img style="width:432px" src="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_2.26.57_PM.png"/></a><figcaption><em>scene/pinned2.json</em></figcaption></figure></div><div id="9c0f1083-373d-4359-9052-fd399dda4741" style="width:50%" class="column"><figure id="a9bf7848-50bf-4f1e-bc02-211e11ad2013" class="image"><a href="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_2.27.56_PM.png"><img style="width:1032px" src="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_2.27.56_PM.png"/></a><figcaption><em>scene/pinned2.json - zoomed in</em></figcaption></figure></div></div><ul id="2f6097c9-470d-4ddd-91e4-4b1e76fa6367" class="bulleted-list"><li style="list-style-type:disc">Show us what the wireframe looks like (1) without any shearing constraints, (2) with only shearing constraints, and (3) with all constraints.</li></ul><div id="d1bb7592-7383-4b46-a177-89b9426816cc" class="column-list"><div id="82a98fc8-428f-4250-8760-87854cd8814f" style="width:50%" class="column"><figure id="76ed5671-6507-4b21-a189-b2622eda2c68" class="image"><a href="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-06_at_12.37.27_PM.png"><img style="width:2038px" src="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-06_at_12.37.27_PM.png"/></a><figcaption>(1) <em>scene/pinned2.json - Without shearing constraints</em></figcaption></figure></div><div id="6d6f930b-5a09-4c23-8ed3-84f2fbfe495f" style="width:50%" class="column"><figure id="050bc252-24b1-4412-9833-6dfc2f388190" class="image"><a href="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-06_at_12.37.15_PM.png"><img style="width:2034px" src="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-06_at_12.37.15_PM.png"/></a><figcaption>(2) <em>scene/pinned2.json - Only shearing constraints</em></figcaption></figure></div></div><figure id="98a87115-d367-4d9c-9ed8-3e531f005d71" class="image"><a href="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-06_at_12.37.04_PM.png"><img style="width:288px" src="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-06_at_12.37.04_PM.png"/></a><figcaption>(3) <em>scene/pinned2.json - All constraints</em></figcaption></figure><h2 id="f637ef5b-5d78-4892-bb4b-e65447e6dc19" class=""><mark class="highlight-yellow_background"><strong>Part 2</strong></mark></h2><p id="f36f2fb1-05e4-4a32-9e08-99110853e7e0" class="">In this part, we simulate the cloth model as a system of masses and springs in order to calculate the movement of our point masses from one time step to the next. We do this by (1) computing the total force acting on each point mass, (2) using Verlet integration to compute new point mass positions, and (3) constraining position updates. </p><p id="5a08a16e-6d93-4ea6-b0e8-0845130d5039" class=""><em>(1) Compute total force acting on each point mass: </em>We start by first computing the total external force based on the given <code>external_accelerations</code> and the <code>mass</code> (<code>F = ma</code>). Then, we apply this force to every point mass (by setting <code>point_mass.forces</code>). Next, we will apply the spring correction forces to each of the spring’s masses on its ends using Hooke’s law (if the spring’s constraint type is currently disabled, we will skip over the calculation step described below):</p><figure id="cfd17161-8647-4e4f-ae05-7430853bad03" class="image"><a href="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_7.01.00_PM.png"><img style="width:350px" src="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_7.01.00_PM.png"/></a></figure><p id="e4735e31-2082-4983-886c-f93deaaea2b6" class="">In the equation above, <code>ks</code> is the spring constant, <code>pa</code> and <code>pb</code> are the positions of the two masses, and <code>l</code> is the spring’s rest length. When the spring type is bending, we multiply our spring constant by 0.2 as the bending should be weaker than structural or shearing constraints. The force we want to apply to our <code>pa</code> and <code>pb</code> is the vector pointing from one point mass to the other with a magnitude equal to <code>||Fs||</code> for one and the opposite force to the other.</p><p id="d21e79cc-ea1d-4d47-9a22-ed1be832d4f2" class="">(2) <em>Use Verlet integration to compute new point mass positions: </em>To calculate our new point mass positions, we will simply solve the following equation:</p><figure id="ca8a71ee-c556-49db-9cc3-4ff017f41240" class="image"><a href="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_7.08.38_PM.png"><img style="width:432px" src="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_7.08.38_PM.png"/></a></figure><p id="08f15a06-b890-494e-a01f-01b0c834d9f0" class="">For each point mass, we will update its <code>position</code> according to the equation above and update the <code>last_position</code> to be equal to the position at the previous time step.</p><p id="e8f10e40-5ac6-4e17-8307-5c1e69eeda73" class=""><em>(3) Constrain position updates: </em>In order to prevent the springs from being unreasonably deformed at each time step, we will apply a constraint to the spring’s point masses’ positions based on the <a href="https://www.cs.rpi.edu/~cutler/classes/advancedgraphics/S14/papers/provot_cloth_simulation_96.pdf">SIGGRAPH 1995 Provot paper</a>. We will first check if the spring’s length is at most 10% greater than its <code>rest_length</code> at the end of the time step. If the spring’s length is more than 10% greater than its <code>rest_length</code>, we will apply a correction to each unpinned point mass (i.e. if one is pinned we will apply the whole correction to the other, if none are pinned we will apply half of the correction to each point mass). If both are pinned, we will do nothing.</p><h3 id="1dc00a16-583d-422d-a611-8fa74377bc46" class="">Experimenting With Parameters</h3><p id="b4c32818-864b-48ee-8707-d7b4ca027302" class="">Changing the spring constant <code>ks</code> affects how much the spring will stretch or compress (i.e. stiffness of the spring). When we have a very low <code>ks</code>, the springs will stretch/compress more and the point mass positions will change more drastically between each time step. On the other hand, when we have a high <code>ks</code>, the springs will be stiffer and the point mass positions will have smaller changes between each time step. Below are some screenshots of the cloth simulation with a very low <code>ks</code> vs. a high <code>ks</code> (paused around the same time).</p><div id="b789964f-d414-4bde-8fca-f99446f944b5" class="column-list"><div id="a1a9a8b3-9e49-4e34-89e7-df160d932afd" style="width:50%" class="column"><figure id="b5837712-bfe0-4b36-9912-589121975aff" class="image"><a href="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_8.37.02_PM.png"><img style="width:746px" src="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_8.37.02_PM.png"/></a><figcaption><code>ks</code> = 5</figcaption></figure></div><div id="dab97bc0-5aae-4c04-acb3-c03cbf3bd79e" style="width:50%" class="column"><figure id="5340a227-704a-4100-bdb7-d997e4b8116a" class="image"><a href="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_8.37.40_PM.png"><img style="width:786px" src="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_8.37.40_PM.png"/></a><figcaption><code>ks</code> = 10000</figcaption></figure></div></div><p id="7f2cd359-37f2-4e80-b510-4b21a90f21ea" class="">Changing the density directly affects how much force is applied to each point mass. A smaller density means that less force is exerted on each point mass, while a larger density means that more force is exerted on each point mass and thus the cloth appears to be weighed down more as it stretches further down. Below are some screenshots of the cloth simulation with a lower and higher density.</p><div id="7339eda0-d61d-4106-8389-944edc15ed24" class="column-list"><div id="1e04ebbd-1e04-47f8-a782-a7b00a93ad68" style="width:50%" class="column"><figure id="8d582c23-b3e0-4741-9a78-1851c797b0f3" class="image"><a href="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_8.49.14_PM.png"><img style="width:1040px" src="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_8.49.14_PM.png"/></a><figcaption><code>density</code> = 5</figcaption></figure></div><div id="0bb4c422-37d6-431e-b1f1-9d3c6b1e7eb8" style="width:50%" class="column"><figure id="e690a9b7-4dfc-4fd7-b5b4-592647a42afb" class="image"><a href="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_8.50.31_PM.png"><img style="width:1030px" src="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_8.50.31_PM.png"/></a><figcaption><code>density</code> = 100</figcaption></figure></div></div><p id="3dc9b4b4-8764-4b9a-8780-8c6489901f9c" class="">When we have a small damping parameter, the cloth swing back and forth many times and we see a lot of movement throughout the whole cloth. When we have a larger damping parameter, we see the opposite. For example, if the damping parameter is close to 1, the cloth simply falls down without any swinging and we see very little movement throughout the cloth. Below are some screenshots of the cloth simulation with a smaller and larger damping parameter, paused about half-way down on the initial fall.</p><div id="39f8d1c3-81db-4e39-9a13-55c6e46e683a" class="column-list"><div id="aae2f51b-c819-44d2-9a77-5447187bd9e2" style="width:50%" class="column"><figure id="b6c76c98-32c0-46bf-9cce-fbe02939ab02" class="image"><a href="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_8.59.34_PM.png"><img style="width:934px" src="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_8.59.34_PM.png"/></a><figcaption><code>damping</code> = 0.00</figcaption></figure></div><div id="238547bc-0571-4ede-9f0f-3a83371ec50d" style="width:50%" class="column"><figure id="42881648-029e-4818-9a0a-70ccf9459a5e" class="image"><a href="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_8.59.22_PM.png"><img style="width:966px" src="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_8.59.22_PM.png"/></a><figcaption><code>damping</code> = 1.00</figcaption></figure></div></div><h3 id="1995fc4c-4336-4c14-85a2-6f3cb94044bc" class="">Results</h3><p id="9eb08896-d896-4ceb-b455-6d2827b07794" class="">Here is the shaded cloth from <em>scene/pinned4.json</em> in its final resting state:</p><figure id="01923641-7a06-4297-b8b6-50cd3675625a" class="image"><a href="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_2.31.35_PM.png"><img style="width:1060px" src="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_2.31.35_PM.png"/></a><figcaption><em>scene/pinned4.json - Final resting state, normal shading + default parameters</em></figcaption></figure><h2 id="558f4618-718e-40b4-9a13-368d6fe96736" class=""><mark class="highlight-yellow_background"><strong>Part 3</strong></mark></h2><p id="2d0d8a4b-c2be-4644-90ff-42b985498b49" class="">In our approach to Part 3, the first thing that we did was to handle collisions with spheres. We modified the <code>Sphere::collide</code> method to check if a point was closer to the origin of the sphere than the radius of the sphere, and if so, we computed a correction vector to move the point towards the surface of the sphere (scaling down by friction). We didn’t run into too many issues with this portion of Part 3.</p><p id="ebbd5a6f-c4e6-485a-9030-35f5740becc2" class="">After this, we implemented collision with planes. We first computed whether or not the point mass had travelled across the plane in the last time step, by using the following formula: <code>dot(normal, pm.position - point) * dot(normal, pm.last_position - point) &lt; 0</code>. If both normal vectors had the same sign, then this test would fail as both points were on the same side of the plane, but if they had different signs, then the test would pass. If it had, then we computed a correction vector to move the point mass towards the right side of the plane, and updated the position of the point mass. We had more issues with this part, but eventually we were able to fix our issues with the point masses going through the plane by replacing some of the places we had incorrectly written <code>position</code> with <code>last_position</code>.  </p><p id="f3509106-4ea0-4835-a277-1a74d7d46d07" class="">
+</p><p id="9be29359-8d25-49bb-99b6-44482a4eba84" class="">
+</p><div id="2c850709-7d80-4661-ac08-6bd5c5dffc19" class="column-list"><div id="8132c886-d250-4e28-b32a-920464e1b8a5" style="width:50%" class="column"><figure id="63d0e3ad-fded-4977-bc24-3df65a02306f" class="image"><a href="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_2.37.21_PM.png"><img style="width:2028px" src="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_2.37.21_PM.png"/></a><figcaption><em>scene/sphere.json - </em><code>ks = 5000</code></figcaption></figure></div><div id="0b1c86f0-8df3-4763-afab-1b8d836dda7c" style="width:50%" class="column"><figure id="e7c862e3-5acd-4e14-b8d0-af489ca90501" class="image"><a href="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_2.38.02_PM.png"><img style="width:2036px" src="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_2.38.02_PM.png"/></a><figcaption><em>scene/sphere.json - </em><code>ks = 500</code></figcaption></figure><p id="ab5e5385-b374-4032-910b-9365ae764a05" class="">
+</p></div></div><figure id="3b715873-4be2-4aed-beda-dab136805173" class="image"><a href="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_2.38.40_PM.png"><img style="width:384px" src="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_2.38.40_PM.png"/></a><figcaption><em>scene/sphere.json - </em><code>ks = 50000</code></figcaption></figure><p id="e3c43292-328f-400f-a029-8e9fb3672485" class="">We can see that as the spring constant <code>ks</code> increases, the cloth becomes wider across the sphere and does not drape down as much. This makes sense, because as we increase the spring constant, the springs become stiffer and so they won’t be able to flex as much. If we kept increasing the spring constant, our cloth would become a metal sheet and would not deform at all. With <code>ks = 500</code> on the other hand, our cloth warps completely around the top of the sphere.</p><p id="7c9c6669-1a4a-4b12-8dc7-6bb2b39515b4" class="">
+</p><p id="26cf5f33-c3f5-47fd-90fb-a23ea2b43b7e" class="">Below, we see the cloth lying at rest on the plane.</p><div id="1b9d06c6-b16c-4d5c-8471-e653748b87e8" class="column-list"><div id="36ce8fd2-a91a-4720-a97d-b808614fc90c" style="width:50%" class="column"><figure id="f39fed79-cfc8-4903-a2b3-586305d36cf7" class="image"><a href="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_2.42.12_PM.png"><img style="width:384px" src="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_2.42.12_PM.png"/></a><figcaption><em>scene/plane.json</em></figcaption></figure></div><div id="d8228ffb-4872-474c-a440-fc60eb24194e" style="width:50%" class="column"><figure id="10767b69-6150-4b1b-b3a4-12b7e61173a4" class="image"><a href="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_2.43.21_PM.png"><img style="width:1154px" src="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_2.43.21_PM.png"/></a><figcaption><em>scene/plane.json - zoomed in</em></figcaption></figure></div></div><h2 id="3dd3670c-549d-41e8-af72-22b77ef07e51" class=""><mark class="highlight-yellow_background"><strong>Part 4 </strong></mark></h2><p id="51565f95-7de8-459a-aceb-3b6cd869a91a" class="">In part 4, we implement self-collisions using spatial hashing. At each time step we will first build a hash table where each Point mass is mapped to a float that represents a specific 3D box volume (these floats will be the keys in the hash table). To do this, we partition the 3D space into 3D boxes with dimensions <code>w * h * t</code> (<code> w = 3 * width / num_width_points</code> , <code> h = 3 * height / num_height_points</code>, <code>t = max(w, h)</code>), and build a <code>hash_position</code> function with takes in a position and computes a unique key that corresponds to the closest 3D box. We will then use this function to build a spatial map by looping over all point masses as using the <code>hash_position</code> function to populate our spatial map. Finally, we will look up potential candidates for collision of the given point mass (i.e. all point masses in the same bucket) and check if they are within <code>2 * thickness</code> apart. If this is true, then we will calculate a correction vector that would correct the point mass pair to be <code>2 * thickness</code> distance apart. We will then correct the point mass’s position by the average all of these correction vectors, scaled down by <code>simulation_steps</code>.</p><h3 id="6f882913-747a-4cbe-bef3-77817c0e73bc" class="">Results</h3><div id="c0ee0778-f1b9-4cee-8815-58995dbe4421" class="column-list"><div id="4f4b5294-3de2-454e-a7c9-45da934d1adc" style="width:33.333333333333336%" class="column"><figure id="43c4134e-b224-440a-97fa-a0fcae41f4d2" class="image"><a href="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_2.45.30_PM.png"><img style="width:934px" src="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_2.45.30_PM.png"/></a></figure></div><div id="e5c493dd-1d82-4efa-843a-a779f422c1ef" style="width:33.333333333333336%" class="column"><figure id="3c4c8b7a-04be-49a3-a036-6ac97950677a" class="image"><a href="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_2.45.48_PM.png"><img style="width:826px" src="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_2.45.48_PM.png"/></a></figure></div><div id="129d8e2d-7fc1-4647-9c4b-0478abb20422" style="width:33.33333333333333%" class="column"><figure id="a8929c87-fe63-46ca-b1a3-d02a05908a67" class="image"><a href="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_2.47.20_PM.png"><img style="width:880px" src="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_2.47.20_PM.png"/></a></figure></div></div><h3 id="1f43b694-4bf1-4c42-a485-cb178d6d5ab6" class="">Experimenting With Parameters</h3><p id="3c4aa992-0fa7-41a8-9655-a2226767f772" class="">When we increase density, we see that the cloth falls down faster and creates tighter folds. When we increase the spring constant, the cloth is stiffer and has less bounces. Below are screenshots of the cloth simulation with varying density values:</p><div id="f3ab0cd3-0c16-4fce-bc3c-ab17c67f6a81" class="column-list"><div id="51cd03b7-d100-4035-80f7-32150378b7ef" style="width:50%" class="column"><figure id="ea975b79-f89c-4b8a-9c10-d3ffa5c56c82" class="image"><a href="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_4.36.09_PM.png"><img style="width:384px" src="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_4.36.09_PM.png"/></a><figcaption><code>density</code> = 2</figcaption></figure></div><div id="d2d90339-8ef3-4be0-9501-7ffb9e0f57c6" style="width:50%" class="column"><figure id="f602f579-50d5-4f7d-a6c3-ee559094959c" class="image"><a href="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_4.35.45_PM.png"><img style="width:1534px" src="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_4.35.45_PM.png"/></a><figcaption><code>density</code> = 200</figcaption></figure></div></div><p id="0691c690-5c9e-4ed6-9f38-6c8b09e04a1a" class="">Below are screenshots of the cloth simulation near its final rest position with varying spring constant values.</p><div id="12da1561-96f4-4c8f-a424-361771514ced" class="column-list"><div id="5eb2e862-51ec-432c-95d4-99479d61cb1f" style="width:33.33333333333333%" class="column"><figure id="8c4fc77c-fa00-4a11-9063-2e6923eb3660" class="image"><a href="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_4.39.36_PM.png"><img style="width:1460px" src="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_4.39.36_PM.png"/></a><figcaption><code>ks</code> = 50</figcaption></figure></div><div id="429023e5-7dc6-4516-9639-b75905854293" style="width:33.33333333333334%" class="column"><figure id="f0603618-439b-4efc-97fc-cc1f501b8bae" class="image"><a href="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_4.39.08_PM.png"><img style="width:1494px" src="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_4.39.08_PM.png"/></a><figcaption><code>ks</code> = 10000</figcaption></figure><p id="b1475c28-de6b-4ba1-a83a-1303ccbc073f" class="">
+</p></div><div id="8a997a17-3c18-4761-80fc-32112bdb800b" style="width:33.33333333333333%" class="column"><figure id="6f87a925-fab2-4f84-a5b4-1d634597f966" class="image"><a href="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_4.41.02_PM.png"><img style="width:1494px" src="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_4.41.02_PM.png"/></a><figcaption><code>ks</code> = 50000</figcaption></figure></div></div><h2 id="e905f73f-5d51-43cd-8a20-bb76382fbc2b" class=""><mark class="highlight-yellow_background"><strong>Part 5</strong></mark></h2><p id="9844e9fe-5ea0-4801-96b6-f78673850a05" class="">In this portion of the project, we completed five tasks related to shaders. Firstly, we implemented diffuse shading, which was fairly straightforward - all we had to do was implement the formula described in the project spec, and compute the final color. Our second task was to implement Blinn-Phong shading, which is described below - we implemented it by calculating the three components, and adding them together. </p><p id="f34373d5-523d-4ca0-a84d-82a6941f1793" class="">The third task was the shortest task - it only took one line of code to find the texture of a particular point. Afterwards, we implemented bump mapping, which was the longest task. We had to first calculate the tangent-bitangent-normal matrix, then look at the derivative of how the height changes as the position changes along the u and v axes, and finally use our Blinn-Phong code to calculate the new colors of each point. The second part of bump mapping involved using the formula in the project spec to modify the vertex positions so that they reflected the height map of the cloth. </p><p id="ce1f8b74-26a9-40ef-9557-a7114afa35f0" class="">
+</p><p id="1b5a2cf8-de6d-4669-ab3f-0ab88297841a" class="">Our final task was to implement reflections onto our cloth. This was easier than we had anticipated, as we ended up being able to just calculate the outgoing and incoming rays, <code>w_o</code> and <code>w_i</code>, and used the texture map to calculate the color of the point based on the incoming rays.</p><p id="5517592c-32c0-4beb-83f5-daad453156f3" class="">
+</p><p id="f0236144-46e8-4a7d-b67e-bd5d578fa417" class="">
+</p><p id="93a96b00-c64f-4bf8-953b-c1fb9423149a" class="">A shader program is a way to compute the colors of a scene without doing computationally-intensive raytracing. Shaders can be used for many tasks, including lighting, texture mapping, and stylization, and are generally much faster than manual raytracing or other computation, though they are less accurate.</p><p id="adbdb550-4e2a-46fd-94e7-5c93903316af" class="">
+</p><p id="da36d15a-7e04-4894-bd2d-561ef29b6293" class="">The job of the vertex shader is to translate the original position, in 3D space, into 2D space. Vertex shaders can also compute texture, as we did with bump mapping. After the vertex shader returns its output, it is now time for the fragment shader to compute the color of points in the scene. It does this in multiple ways, but the main one that we used was the Blinn-Phong shading model.</p><p id="ce6e3791-87cc-4555-b3df-6a7a6d2a60b3" class="">
+</p><p id="a44a1766-2cff-40d4-bbb4-53eae2598832" class="">The Blinn-Phong shading model uses three components to estimate the lighting at a particular point - the ambient, diffuse, and specular components. The ambient component represents the light that is always present in a scene, and is a constant value (for our program, we used 0.1). The diffuse component represents the light that comes from a surface being illuminated by a light source, when that light is reflected in all directions. It can be calculated by taking the angle between the normal vector at the surface and the direction of the light source, scaled by the distance to the light source squared, and a constant factor (we used 0.8).</p><p id="cd8ef402-1fd1-4c4c-855c-45e8030ec246" class="">
+</p><p id="3b30c9ac-2228-4070-8033-779e18276182" class="">Finally, the specular component is the light which is reflected off of a surface in a specific direction. This is calculated by computing the angle between the surface normal, and the “halfway vector”, which is the vector halfway between the light vector and the viewpoint. Then, we raise this result to the power of the shininess of the material (we used 100), and finally again scaled by the distance to the light source squared, and another constant factor (we used 0.5). </p><p id="cb4b2185-1e7f-4ae1-9b2d-1be89a163cf0" class="">
+</p><p id="b2c081be-84a6-47c8-83d4-2bb0885b1d03" class="">Blinn-Phong shading model with each component, and then with all of them combined.</p><div id="d9537238-e253-4945-9bc4-fe2486a3936f" class="column-list"><div id="0c30832d-3b16-409b-ac94-5f11dc1db697" style="width:50%" class="column"><figure id="d1aef72c-647a-49d8-93f8-8a8e3ed0d57c" class="image"><a href="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_2.53.16_PM.png"><img style="width:1332px" src="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_2.53.16_PM.png"/></a><figcaption>scene/sphere.json - Diffuse shader</figcaption></figure></div><div id="9f5f5e39-1d2b-466d-9e94-cf5d4d87f5b5" style="width:50%" class="column"><figure id="01385178-9384-46eb-8010-931515b67539" class="image"><a href="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_2.54.45_PM.png"><img style="width:1332px" src="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_2.54.45_PM.png"/></a><figcaption>scene/sphere.json - Blinn-Phong shader (entire model)</figcaption></figure></div></div><div id="acef55aa-f794-4270-8a63-df00c2a5b012" class="column-list"><div id="5317d66d-308b-4327-98c4-f3d91b72dc61" style="width:33.333333333333336%" class="column"><figure id="d53be0be-95ca-4ce2-befc-7b4c070ae7ce" class="image"><a href="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_4.47.44_PM.png"><img style="width:868px" src="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_4.47.44_PM.png"/></a><figcaption>scene/sphere.json - Blinn-Phong shader (only ambient)</figcaption></figure></div><div id="2b1e46aa-acab-4df1-a054-387b665b26c8" style="width:33.333333333333336%" class="column"><figure id="39ec00fb-5daf-4bf6-b4f6-dba6a84ae1a2" class="image"><a href="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_4.48.52_PM.png"><img style="width:826px" src="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_4.48.52_PM.png"/></a><figcaption>scene/sphere.json - Blinn-Phong shader (only diffuse)</figcaption></figure></div><div id="e50d649c-562e-4555-a9ff-f65574a45b6e" style="width:33.33333333333333%" class="column"><figure id="2b9de0bc-241d-4c44-b301-bd957733e7b0" class="image"><a href="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_4.49.46_PM.png"><img style="width:936px" src="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_4.49.46_PM.png"/></a><figcaption>scene/sphere.json - Blinn-Phong shader (only specular)</figcaption></figure></div></div><p id="36ae90a2-94c0-42bf-bb05-9960e8a374bc" class="">Below, we see our custom texture.</p><figure id="7fd11bd1-12c6-4b4c-8bae-3a21e8ea0617" class="image"><a href="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_2.55.11_PM.png"><img style="width:1322px" src="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_2.55.11_PM.png"/></a><figcaption>scene/sphere.json - Texture mapping shader (u_texture_1)</figcaption></figure><div id="4b9c77ab-a683-41ff-94b7-97c0a9726494" class="column-list"><div id="9d4e1952-3ab2-41ad-a71a-564bdd0b605c" style="width:50%" class="column"><figure id="7c5caaba-35e0-45f4-b673-2e11d186c34a" class="image"><a href="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/texture_1_copy.png"><img style="width:1200px" src="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/texture_1_copy.png"/></a><figcaption>Custom texture</figcaption></figure></div><div id="9321260b-47e3-4739-a93d-23b2ee5d7c43" style="width:50%" class="column"><figure id="3edfd18e-e59e-419e-bc10-2135ed912f58" class="image"><a href="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_3.01.49_PM.png"><img style="width:1324px" src="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_3.01.49_PM.png"/></a><figcaption>scene/sphere.json - Custom texture shader</figcaption></figure></div></div><p id="6da01d8c-2fab-4920-859b-c9fcbb675096" class="">
+</p><p id="f08a63f8-e79c-4888-bc96-f2dcef5d345b" class="">Below are our examples of bump mapping (analysis at the end)</p><div id="10692a72-1c8b-44c5-978a-ee276b313717" class="column-list"><div id="5938a18b-e4a0-484d-9d1e-c1a3417e90db" style="width:50%" class="column"><figure id="e51c7a06-b9da-42b1-b3ee-7180aa956b00" class="image"><a href="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_4.16.06_PM.png"><img style="width:1250px" src="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_4.16.06_PM.png"/></a><figcaption>scene/sphere.json - Bump mapping w/ <code>texture_3.png</code></figcaption></figure></div><div id="370bc709-308e-40bc-a7ea-c238b6037056" style="width:50%" class="column"><figure id="69515282-dd25-4214-a0c0-f254be611718" class="image"><a href="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_4.16.39_PM.png"><img style="width:1212px" src="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_4.16.39_PM.png"/></a><figcaption>scene/sphere.json - Bump mapping w/ <code>texture_3.png</code></figcaption></figure></div></div><div id="3b7b1aac-e702-477b-8066-5cd07ae5b7cf" class="column-list"><div id="a05bc05a-7721-49f6-a052-11ba553ceecc" style="width:50%" class="column"><figure id="4ae85fbc-2521-4bd6-af2c-695795407e5e" class="image"><a href="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_4.19.52_PM.png"><img style="width:1196px" src="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_4.19.52_PM.png"/></a><figcaption>scene/sphere.json - Displacement mapping w/ <code>texture_3.png</code></figcaption></figure></div><div id="dc04e1ea-6fa5-4634-83e9-0f20a95ea4ed" style="width:50%" class="column"><figure id="94c23925-169f-416c-a3e3-023550d3ed34" class="image"><a href="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_4.20.52_PM.png"><img style="width:1274px" src="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_4.20.52_PM.png"/></a><figcaption>scene/sphere.json - Displacement mapping w/ <code>texture_3.png</code></figcaption></figure></div></div><div id="f24eb68e-ea2c-462d-add8-91e5ae17e878" class="column-list"><div id="76359b49-d7b6-47fe-94a7-f0face439430" style="width:50%" class="column"><figure id="78514c3d-6042-47cc-99e1-4365d4e22434" class="image"><a href="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_4.23.38_PM.png"><img style="width:1218px" src="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_4.23.38_PM.png"/></a><figcaption>scene/sphere.json - Bump mapping w/ <code>texture_3.png</code>, <code>-o 16 -a 16</code></figcaption></figure></div><div id="361aa480-af53-43eb-b502-7bcad4b50833" style="width:50%" class="column"><figure id="8c8b3d8f-1c83-4dfc-b041-e860749ea73c" class="image"><a href="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_4.25.19_PM.png"><img style="width:1134px" src="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_4.25.19_PM.png"/></a><figcaption>scene/sphere.json - Bump mapping w/ <code>texture_3.png</code>, <code>-o 128 -a 128</code></figcaption></figure></div></div><div id="490fe517-dbfd-453a-b6e1-1a326aefd9a0" class="column-list"><div id="6064159d-0c16-42eb-9c55-cb15c95ada03" style="width:50%" class="column"><figure id="3977609e-f99a-49be-88ac-ebb73a239b67" class="image"><a href="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_4.26.51_PM.png"><img style="width:1230px" src="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_4.26.51_PM.png"/></a><figcaption>scene/sphere.json - Displacement mapping w/ <code>texture_3.png</code>, <code>-o 16 -a 16</code></figcaption></figure></div><div id="1539c0d7-7634-4191-bc2f-782f23d044c0" style="width:50%" class="column"><figure id="5d71149c-d8cd-462c-b037-cd5860f5f839" class="image"><a href="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_4.26.08_PM.png"><img style="width:1114px" src="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_4.26.08_PM.png"/></a><figcaption>scene/sphere.json - Displacement mapping w/ <code>texture_3.png</code>, <code>-o 128 -a 128</code></figcaption></figure></div></div><p id="4278c58a-9e8d-4b07-8e8e-152ee28f1b82" class="">As we can see above, there are slight differences between bump mapping and displacement mapping. The biggest difference can be seen with the sphere, as with displacement mapping, the sphere no longer appears completely flat and smooth, while with bump mapping, the sphere still appears to be smooth. Displacement mapping looks more “real” and more like an actual 3D object as opposed to a texture placed onto a sphere.</p><p id="fa8f8689-601a-4ec1-97d1-48e3d469402f" class="">Displacement mapping reacts to the increase in the coarseness value by looking more like a sphere instead of a somewhat polygonal shape. This effect is also there with bump mapping, but it is significantly less pronounced.</p><p id="225d083a-bd6e-410a-a0db-0cce7ee5bc43" class="">
+</p><p id="4d3bc28d-1ccb-4a1b-9721-dddcbf264603" class="">Below, we see the mirror shader on the cloth, on the sphere, and the initial state before the cloth falls. </p><div id="f81706fb-048e-43d8-9c6d-822fd153b4fa" class="column-list"><div id="7ed4e1c9-d170-48f9-b65e-48a3c33800d4" style="width:33.33333333333333%" class="column"><figure id="2990b4c0-e042-41fc-a8f7-3afaa548b20c" class="image"><a href="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_4.27.50_PM.png"><img style="width:832px" src="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_4.27.50_PM.png"/></a><figcaption>scene/sphere.json - Mirror shader</figcaption></figure></div><div id="63191d43-a8dd-4898-8de2-f3f61e499db8" style="width:29.166666666666664%" class="column"><figure id="e77c161b-eeaa-4689-a134-197534c472e4" class="image"><a href="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_4.29.37_PM.png"><img style="width:1000px" src="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_4.29.37_PM.png"/></a><figcaption>scene/sphere.json - Mirror shader</figcaption></figure></div><div id="a9b66fb7-7305-49f1-a3d7-222ac1ab9603" style="width:37.499999999999986%" class="column"><figure id="fd7d991c-eee9-4e09-96c2-bae2d12392b0" class="image"><a href="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_4.28.31_PM.png"><img style="width:1454px" src="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_4.28.31_PM.png"/></a><figcaption>scene/sphere.json - Mirror shader</figcaption></figure><p id="450b4483-7b47-49e6-aeb8-89e30bd7da3c" class="">
+</p><p id="24473bfa-a841-42c6-864e-de066ef9eb31" class="">
+</p></div></div><p id="41bbf9ae-3530-47ae-944d-6e808ea06253" class="">Below is our custom shader. In order to create the custom shader, we combined our code from the bump mapping task and the mirror task, to create this somewhat more interesting-looking mirror. It seems like something similar to this could be used to simulate water, because the bumps look kind of like waves.</p><div id="4dd9e968-1c3f-4e2f-b8a2-01e716382dce" class="column-list"><div id="19acabe9-cdec-4298-9e31-497caa6ca807" style="width:50%" class="column"><figure id="43f7aecf-105c-43cb-8b26-dc0bade6c893" class="image"><a href="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_4.31.15_PM.png"><img style="width:1308px" src="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_4.31.15_PM.png"/></a><figcaption>scene/sphere.json - Custom shader (bump + mirror)</figcaption></figure></div><div id="a5d315b2-791e-40f9-a783-1ab5f6126b17" style="width:50%" class="column"><figure id="9b096791-4af7-48b9-b180-c41ffd3b1a4e" class="image"><a href="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_4.31.51_PM.png"><img style="width:1358px" src="%5BCS%20184%5D%20Project%204%200d193e7f71ce45739228b5c95c6bfc5c/Screen_Shot_2023-04-13_at_4.31.51_PM.png"/></a><figcaption>scene/sphere.json - Custom shader (bump + mirror)</figcaption></figure></div></div><p id="6e6abc44-a386-4879-ab29-32d0bfd09503" class="">
+</p></div></article></body></html>
